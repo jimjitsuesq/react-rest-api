@@ -113,14 +113,15 @@ router.post('/courses', asyncHandler(async (req, res, next) => {
 /**
  * Route to delete an existing course
  */
- router.delete('/courses/:id', authenticateUser, asyncHandler(async (req, res, next) => {
+//  router.delete('/courses/:id', authenticateUser, asyncHandler(async (req, res, next) => {
+  router.delete('/courses/:id', asyncHandler(async (req, res, next) => {
   let course = await Course.findByPk(req.params.id);
-  if ( course.userId === req.currentUser.id) {
+  // if ( course.userId === req.currentUser.id) {
     course.destroy();
     res.status(204).end()
-  } else {
-    res.status(403).end()
-  }
+  // } else {
+  //   res.status(403).end()
+  // }
 }));
 
 module.exports = router;
