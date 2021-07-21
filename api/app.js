@@ -66,6 +66,7 @@ app.use((err, req, res, next) => {
     message: err.message,
     error: {},
   });
+  console.error(err)
 });
 
 // set our port
