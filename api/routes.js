@@ -37,7 +37,14 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
   res.cookie('user', `${authenticatedUser.firstName}`).status(200).send();
   console.log(req.cookies)
 }));
-  
+
+// Log User Out
+
+router.get('/signout', (req, res) => {
+  res.clearCookie('user');
+  res.status(200).end();
+})
+
 /**
  * Route to create a new user
  */
