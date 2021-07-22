@@ -7,16 +7,19 @@ const routes = require('./routes');
 const express = require('express');
 const cors = require ('cors')
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 
 // variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
 
 // create the Express app
 const app = express();
-
-app.use(cors());
+app.use(cookieParser('82e4e438a0705fabf61f9854e3b575af'));
+app.use(cors({ origin: true, credentials: true }));
 
 app.use(express.json());
+
+
 
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));

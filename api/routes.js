@@ -4,20 +4,38 @@ const express = require('express');
 const { asyncHandler } = require('./middleware/async-handler');
 const { User, Course } = require('./models');
 const { authenticateUser } = require('./middleware/auth-user');
+const cookieParser = require('cookie-parser');
+
 
 // Construct a router instance.
 const router = express.Router();
 
+ 
 /**
  * Route to return the currently authenticated user
  */
-router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
+/* router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
     const authenticatedUser = await User.findOne({ 
       where: {emailAddress: req.currentUser.emailAddress},
       attributes: {exclude: ['password', 'createdAt', 'updatedAt']}});
 
     res.status(200).json({ authenticatedUser });
     
+}));  */
+
+/**
+ * Route to log in a User
+ */
+router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
+  /* const options = {
+    httpOnly: false,
+    signed: true
+  } */
+  const authenticatedUser = await User.findOne({ 
+    where: {emailAddress: req.currentUser.emailAddress},
+    attributes: {exclude: ['password', 'createdAt', 'updatedAt']}});
+  res.cookie('user', `${authenticatedUser.firstName}`).status(200).send();
+  console.log(req.cookies)
 }));
   
 /**
@@ -26,7 +44,7 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
 router.post('/users', asyncHandler(async (req, res) => {
     try {
       await User.create(req.body);
-      return res.status(201).location('/').end();
+      return res.status(201).location('/').send();
     } catch (error) {
       if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
         const errors = error.errors.map(err => err.message);
