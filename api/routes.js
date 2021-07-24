@@ -27,15 +27,15 @@ const router = express.Router();
  * Route to log in a User
  */
 router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
-  /* const options = {
+  const options = {
     httpOnly: false,
     signed: true
-  } */
+  }
   const authenticatedUser = await User.findOne({ 
     where: {emailAddress: req.currentUser.emailAddress},
-    attributes: {exclude: ['password', 'createdAt', 'updatedAt']}});
-  res.cookie('user', `${authenticatedUser.firstName}`).status(200).send();
-  console.log(req.cookies)
+    attributes: {exclude: ['createdAt', 'updatedAt']}});
+  res.status(200).cookie('user', authenticatedUser.password).json({ authenticatedUser });
+  console.log(req.signedcookies)
 }));
 
 // Log User Out
@@ -72,9 +72,7 @@ router.get('/courses', asyncHandler(async (req, res) => {
       attributes: {exclude: ['createdAt', 'updatedAt']}
     }]
   });
-
   res.status(200).json({courses})
-  
 }));
 
 /**
@@ -88,16 +86,13 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
       attributes: {exclude: ['createdAt', 'updatedAt']}
     }]
   });
-
   res.status(200).json({course})
-  
 }));
 
 /**
  * Route to create a new course
  */
-// router.post('/courses', authenticateUser, asyncHandler(async (req, res, next) => {
-router.post('/courses', asyncHandler(async (req, res, next) => {
+router.post('/courses', authenticateUser, asyncHandler(async (req, res, next) => {
   try {
     let course = await Course.create(req.body);
     res.status(201).location(`api/courses/${course.id}`).end()
@@ -115,17 +110,16 @@ router.post('/courses', asyncHandler(async (req, res, next) => {
 /**
  * Route to modify an existing course
  */
-//  router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res, next) => {
-router.put('/courses/:id', asyncHandler(async (req, res, next) => {
+router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res, next) => {
   try {
     const course = req.body;
     const courseToUpdate = await Course.findByPk(req.params.id); 
-    // if ( courseToUpdate.userId === req.currentUser.id) {
+    if ( courseToUpdate.userId === req.currentUser.id) {
       await Course.update(course, { where: { id: req.params.id } } );
       res.status(204).end();
-    // } else {
-    //   res.status(403).end();
-    // }
+    } else {
+      res.status(403).end();
+    }
   } catch (error) {
     if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
       const errors = error.errors.map(err => err.message);
@@ -140,15 +134,14 @@ router.put('/courses/:id', asyncHandler(async (req, res, next) => {
 /**
  * Route to delete an existing course
  */
-//  router.delete('/courses/:id', authenticateUser, asyncHandler(async (req, res, next) => {
-  router.delete('/courses/:id', asyncHandler(async (req, res, next) => {
+router.delete('/courses/:id', authenticateUser, asyncHandler(async (req, res, next) => {
   let course = await Course.findByPk(req.params.id);
-  // if ( course.userId === req.currentUser.id) {
+  if ( course.userId === req.currentUser.id) {
     course.destroy();
     res.status(204).end()
-  // } else {
-  //   res.status(403).end()
-  // }
+  } else {
+    res.status(403).end()
+  }
 }));
 
 module.exports = router;
