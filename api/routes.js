@@ -78,6 +78,7 @@ router.get('/courses', asyncHandler(async (req, res) => {
  * Route to return the course associated with a given id
  */
 router.get('/courses/:id', asyncHandler(async (req, res) => {
+  try {
   let course = await Course.findByPk(req.params.id, {
     attributes: {exclude: ['createdAt', 'updatedAt']}, 
     include: [{ 
@@ -85,7 +86,14 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
       attributes: {exclude: ['createdAt', 'updatedAt']}
     }]
   });
-  res.status(200).json({course})
+    if(course !== null) {
+      res.status(200).json({course})
+    } else {
+      res.sendStatus(404)
+    }
+  } catch (error) {
+    throw (error)
+  }
 }));
 
 /**
