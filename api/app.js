@@ -79,8 +79,3 @@ app.set('port', process.env.PORT || 5000);
 const server = app.listen(app.get('port'), () => {
   console.log(`Express server is listening on port ${server.address().port}`);
 });
-
-//For some reason it only works on port 80.
-/* app.listen('80','192.168.50.176', () => {
-  console.info(`server started on port 80)`);
-}); */
