@@ -34,8 +34,7 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
   const authenticatedUser = await User.findOne({ 
     where: {emailAddress: req.currentUser.emailAddress},
     attributes: {exclude: ['createdAt', 'updatedAt']}});
-  res.status(200).cookie('user', authenticatedUser.password).json({ authenticatedUser });
-  console.log(req.signedcookies)
+  res.status(200).cookie('user', authenticatedUser.password, { signed: true }).json({ authenticatedUser })
 }));
 
 // Log User Out
@@ -123,12 +122,14 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res, next)
   } catch (error) {
     if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
       const errors = error.errors.map(err => err.message);
-      res.status(400).json({ errors });   
+      res.status(400).json({ errors })
+      console.log(error.message)
     } else {
+      
       throw error;
+      
     }
   }
-  
 }));
 
 /**
