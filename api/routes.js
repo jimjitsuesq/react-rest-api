@@ -79,13 +79,13 @@ router.get('/courses', asyncHandler(async (req, res) => {
  */
 router.get('/courses/:id', asyncHandler(async (req, res) => {
   try {
-  let course = await Course.findByPk(req.params.id, {
-    attributes: {exclude: ['createdAt', 'updatedAt']}, 
-    include: [{ 
-      model: User,
-      attributes: {exclude: ['createdAt', 'updatedAt']}
-    }]
-  });
+    let course = await Course.findByPk(req.params.id, {
+      attributes: {exclude: ['createdAt', 'updatedAt']}, 
+      include: [{ 
+        model: User,
+        attributes: {exclude: ['createdAt', 'updatedAt']}
+      }]
+    });
     if(course !== null) {
       res.status(200).json({course})
     } else {
