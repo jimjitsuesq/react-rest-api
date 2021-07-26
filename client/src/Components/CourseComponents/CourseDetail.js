@@ -14,6 +14,7 @@ const CourseDetail = (props) => {
     const [error500Status, setError500Status] = useState(false)
     let { id } = useParams();
     let history = useHistory();
+
     const deleteCourse = async () => {
         try {
             await axios.delete(`http://localhost:5000/api/courses/${id}`, {

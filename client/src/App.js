@@ -9,7 +9,7 @@ import UserSignIn from './Components/UserComponents/UserSignIn';
 import UserSignOut from './Components/UserComponents/UserSignOut';
 import CreateCourse from './Components/CourseComponents/CreateCourse';
 import UpdateCourse from './Components/CourseComponents/UpdateCourse';
-import PrivateRoute from './Components/PrivateRoute';
+import PrivateRoute from './Components/RouteComponents/PrivateRoute';
 import CourseDetail from './Components/CourseComponents/CourseDetail';
 import NotFound from './Components/ErrorComponents/NotFound';
 import Forbidden from './Components/ErrorComponents/Forbidden';
@@ -17,7 +17,7 @@ import UnhandledError from './Components/ErrorComponents/UnhandledError';
 
 axios.defaults.withCredentials = true;
 
-function App() {
+function App(props) {
   const [userData, setUserData] = useState('');
   const [userId, setUserId] = useState();
   const [userName, setUserName] = useState('');
@@ -29,7 +29,8 @@ function App() {
   
   const cookieValue = document.cookie.split('=')[1]
   let history = useHistory()
-  async function SignIn () {
+  
+  async function SignIn (props) {
     try {
         const response = await axios.get('http://localhost:5000/api/users', {
             auth: {
@@ -48,7 +49,7 @@ function App() {
         setPassword(response.data.authenticatedUser.password)
         console.log('User Signed In')
         setIsLoggedIn(true)
-        history.push('/')
+        history.push(props)
     } catch(error) {
         if(error.response.status === 500) {
             setError500Status(true)

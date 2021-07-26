@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory, useLocation, withRouter, Link } from 'react-router-dom';
 
 function Header (props) {
+    let history = useHistory()
+    let location = useLocation()
     if(props.isLoggedIn === true) {
         return(
             <header>
@@ -23,7 +26,7 @@ function Header (props) {
                     <nav>
                         <ul className="header--signedout">
                             <li><a href="/api/signup">Sign Up</a></li>
-                            <li><a href="/api/signin">Sign In</a></li>
+                            <li><Link to={{ pathname: '/api/signin', state:{from: history.location}}} >Sign In</Link></li>
                         </ul>
                     </nav>
                 </div>    
@@ -32,4 +35,4 @@ function Header (props) {
     }
 }
 
-export default Header;
+export default withRouter(Header);

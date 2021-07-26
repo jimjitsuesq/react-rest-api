@@ -1,11 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation, withRouter } from 'react-router-dom';
 
 function UserSignIn (props) {
+    let history = useHistory()
+    let location = useLocation()
+    let lastLocation = (location.state.from.pathname)
+
+    console.log(lastLocation)    
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.onSubmit()
+        props.onSubmit(lastLocation)
     }
     return (
         <div className="form--centered">
@@ -36,4 +42,4 @@ function UserSignIn (props) {
     )
 }
 
-export default UserSignIn;
+export default withRouter (UserSignIn);
