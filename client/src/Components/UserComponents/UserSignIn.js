@@ -3,7 +3,13 @@ import { useLocation } from 'react-router-dom';
 
 function UserSignIn (props) {
     let location = useLocation()
-    let lastLocation = (location.state.from.pathname) 
+    let lastLocation
+    if(location.state !== undefined) {
+        lastLocation = (location.state.from.pathname) 
+    } else {
+        lastLocation = '/'
+    }
+    
     
     const handleSubmit = (e) => {
         e.preventDefault();

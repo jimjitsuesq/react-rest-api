@@ -11,7 +11,7 @@ function Header (props) {
                     <nav>
                         <ul className="header--signedin">
                             <li>Welcome, {props.userName}!</li>
-                            <li><a href="/api/signout">Sign Out</a></li>
+                            <li><a href="/signout">Sign Out</a></li>
                         </ul>
                     </nav>
                 </div>    
@@ -24,8 +24,8 @@ function Header (props) {
                     <h1 className="header--logo"><a href="/">Courses</a></h1>
                     <nav>
                         <ul className="header--signedout">
-                            <li><a href="/api/signup">Sign Up</a></li>
-                            <li><Link to={{ pathname: '/api/signin', state:{from: history.location}}} >Sign In</Link></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                            <li><Link to={{ pathname: '/signin', state:{from: history.location}}} >Sign In</Link></li>
                         </ul>
                     </nav>
                 </div>    

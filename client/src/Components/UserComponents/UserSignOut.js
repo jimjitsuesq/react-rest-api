@@ -18,7 +18,7 @@ const UserSignOut = () => {
         }
     }
     if (error500Status === true) {
-        return <Redirect to="/api/error" />
+        return <Redirect to="/error" />
     } else {
         return (null)
     }

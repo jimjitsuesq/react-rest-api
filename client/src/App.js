@@ -48,16 +48,16 @@ function App(props) {
         console.log('User Signed In')
         setIsLoggedIn(true)
         history.push(props)
-    } catch(error) {
-        if(error.response.status === 500) {
+    } catch (error) {
+      if (error.response.status === 500) {
             setError500Status(true)
             console.log(error500Status)
         } else {
-            if(error.response.status === 400) {
+          if (error.response.status === 400) {
                 setValidationErrors(error.response.data.errors) 
                 console.log(validationErrors)
             } else {
-            console.log(error);
+                console.log(error);
             }
         }
     }
@@ -86,17 +86,17 @@ function App(props) {
                 render={(props) => <Courses />} 
               />
               <PrivateRoute 
-                path="/api/courses/create" 
+                path="/courses/create" 
                 props={{isLoggedIn:isLoggedIn, userData:userData}} 
                 component={CreateCourse} 
               />
               <PrivateRoute 
-                path="/api/courses/:id/update" 
+                path="/courses/:id/update" 
                 props={{isLoggedIn:isLoggedIn, userData:userData}} 
                 component={UpdateCourse} 
               />
               <Route 
-                path="/api/courses/:id"  
+                path="/courses/:id"  
                 render={(props) =>  <CourseDetail 
                                       isLoggedIn={isLoggedIn} 
                                       userId={userId}
@@ -105,11 +105,11 @@ function App(props) {
                 } 
               />
               <Route 
-                path="/api/signup" 
+                path="/signup" 
                 component={UserSignUp} 
               />
               <Route 
-                path="/api/signin" 
+                path="/signin" 
                 render={(props) =>  <UserSignIn 
                                       emailAddress={emailAddress} 
                                       password={password} 
@@ -123,20 +123,20 @@ function App(props) {
                 } 
               />
               <Route 
-                path="/api/signout" 
+                path="/signout" 
                 component={UserSignOut} 
               />
               <Route 
-                path="/api/forbidden" 
+                path="/forbidden" 
                 component={Forbidden} 
               />
               <Route 
-                path="/api/error" 
+                path="/error" 
                 component={UnhandledError} 
               />
               <Route>
                 <NotFound 
-                  path="api/notfound" 
+                  path="/notfound" 
                   component={NotFound}
                 />
               </Route>

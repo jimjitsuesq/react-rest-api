@@ -13,7 +13,7 @@ const PrivateRoute = ({component: Component, props, ...rest}) => {
         return (
         // Show the component only when the user is logged in
         // Otherwise, redirect the user to /signin page
-            <Redirect to={{ pathname: '/api/signin', state: {from: history.location} }} /> 
+            <Redirect to={{ pathname: '/signin', state: {from: history.location} }} /> 
         )
     }
 }

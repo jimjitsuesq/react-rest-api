@@ -61,7 +61,7 @@ const CourseDetail = (props) => {
     } 
     
     if (error500Status === true) {
-        return <Redirect to="/api/error" />
+        return <Redirect to="/error" />
     }
 
     if (isLoading) {

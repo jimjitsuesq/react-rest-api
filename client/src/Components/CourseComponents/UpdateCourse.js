@@ -79,7 +79,7 @@ function UpdateCourse (props) {
     }
 
     if (error500Status === true) {
-        return <Redirect to="/api/error" />
+        return <Redirect to="/error" />
     }
 
     if (isLoading) {
@@ -131,12 +131,12 @@ function UpdateCourse (props) {
                                 </textarea>
                             </div>
                         </div>
-                        <button className="button" type="submit" onClick={HandleSubmit}>Update Course</button><button className="button button-secondary"><a href={`/api/courses/${course.id}`}>Cancel</a></button>
+                        <button className="button" type="submit" onClick={HandleSubmit}>Update Course</button><button className="button button-secondary"><a href={`/courses/${course.id}`}>Cancel</a></button>
                     </form>
                 </div>
         )
     } else {
-        return <Redirect to="/api/forbidden" />
+        return <Redirect to="/forbidden" />
             }
 }
 
