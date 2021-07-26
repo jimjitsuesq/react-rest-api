@@ -74,7 +74,7 @@ function App(props) {
         setPassword(userData.password)
         setIsLoggedIn(true)
       }    
-  }, [])
+  }, [userData.password])
   
   return (
     <>

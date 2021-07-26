@@ -1,12 +1,9 @@
 import React from 'react';
-import { useHistory, useLocation, withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function UserSignIn (props) {
-    let history = useHistory()
     let location = useLocation()
-    let lastLocation = (location.state.from.pathname)
-
-    console.log(lastLocation)    
+    let lastLocation = (location.state.from.pathname) 
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,4 +38,4 @@ function UserSignIn (props) {
     )
 }
 
-export default withRouter (UserSignIn);
+export default UserSignIn;

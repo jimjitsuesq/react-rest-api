@@ -32,28 +32,29 @@ const CourseDetail = (props) => {
             }
         }
     }
-    const fetchCourse = async () => {
-        try {     
-            const response = await axios.get(`http://localhost:5000/api/courses/${id}`)
-            getCourse(response.data.course)
-            setThisCourseUserId(response.data.course.User.id)
-            getMaterials(response.data.course.materialsNeeded)
-            setLoading(false)
-        } catch (error) {
-            if(error.response.status === 500) {
-                setError500Status(true)
-            } else {
-                if(error.response.status === 404) {
-                    setNoCourse(true) 
+    
+    useEffect(() => {
+        const fetchCourse = async () => {
+            try {     
+                const response = await axios.get(`http://localhost:5000/api/courses/${id}`)
+                getCourse(response.data.course)
+                setThisCourseUserId(response.data.course.User.id)
+                getMaterials(response.data.course.materialsNeeded)
+                setLoading(false)
+            } catch (error) {
+                if(error.response.status === 500) {
+                    setError500Status(true)
                 } else {
-                    console.log(error);
+                    if(error.response.status === 404) {
+                        setNoCourse(true) 
+                    } else {
+                        console.log(error);
+                    }
                 }
             }
         }
-    }
-    useEffect(() => {
         fetchCourse()
-    }, []);
+    }, [id]);
         
     if (noCourse === true) {
         return <Redirect to="/notfound" />

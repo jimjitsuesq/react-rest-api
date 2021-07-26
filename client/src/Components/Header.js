@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, withRouter, Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 function Header (props) {
     let history = useHistory()
@@ -34,4 +34,4 @@ function Header (props) {
     }
 }
 
-export default withRouter(Header);
+export default Header;

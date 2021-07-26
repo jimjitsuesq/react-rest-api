@@ -21,7 +21,7 @@ function CreateCourse (props) {
         setUserId(foundUser.id);
         setEmailAddress(foundUser.emailAddress);
         setPassword(foundUser.password)
-    }, [])
+    }, [foundUser.emailAddress, foundUser.id, foundUser.password])
 
     const handleSubmit = async (e) => {
         const course = {
