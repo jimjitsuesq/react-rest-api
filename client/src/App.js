@@ -26,8 +26,6 @@ function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [validationErrors, setValidationErrors] = useState([])
   const [error500Status, setError500Status] = useState(false)
-  
-  const cookieValue = document.cookie.split('=')[1]
   let history = useHistory()
   
   async function SignIn (props) {
@@ -53,9 +51,11 @@ function App(props) {
     } catch(error) {
         if(error.response.status === 500) {
             setError500Status(true)
+            console.log(error500Status)
         } else {
             if(error.response.status === 400) {
                 setValidationErrors(error.response.data.errors) 
+                console.log(validationErrors)
             } else {
             console.log(error);
             }

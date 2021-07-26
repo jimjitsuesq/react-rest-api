@@ -31,7 +31,7 @@ function UpdateCourse (props) {
         }
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:5000/api/courses/${id}`, course, {
+            await axios.put(`http://localhost:5000/api/courses/${id}`, course, {
                 auth: {
                     username: props.userData.emailAddress,
                     password: props.userData.password

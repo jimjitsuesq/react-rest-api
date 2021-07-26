@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { useHistory, useLocation, withRouter } from 'react-router-dom';
 
 function UserSignIn (props) {

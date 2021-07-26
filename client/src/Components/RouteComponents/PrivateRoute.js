@@ -1,10 +1,8 @@
 import React from 'react';
-import { Route, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Route, Redirect, useHistory } from 'react-router-dom';
 
 const PrivateRoute = ({component: Component, props, ...rest}) => {
     let history = useHistory()
-    let location = useLocation()
-    let lastLocation = history.location
     if (document.cookie.includes('user')) {
         return (
             <Route {...rest}>

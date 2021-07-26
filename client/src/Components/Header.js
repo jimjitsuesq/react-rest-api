@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { useHistory, useLocation, withRouter, Link } from 'react-router-dom';
+import React from 'react';
+import { useHistory, withRouter, Link } from 'react-router-dom';
 
 function Header (props) {
     let history = useHistory()
-    let location = useLocation()
     if(props.isLoggedIn === true) {
         return(
             <header>

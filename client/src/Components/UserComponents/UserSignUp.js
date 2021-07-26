@@ -22,7 +22,7 @@ function UserSignUp () {
         console.log(user)
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/users', user)
+            await axios.post('http://localhost:5000/api/users', user)
             console.log('User Created')
             history.push('/')
         } catch(error) {

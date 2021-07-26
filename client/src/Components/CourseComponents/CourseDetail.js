@@ -8,7 +8,6 @@ const CourseDetail = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [course, getCourse] = useState();
     const [materials, getMaterials] = useState();
-    const [materialsList, setMaterialsList] = useState()
     const [thisCourseUserId, setThisCourseUserId] = useState();
     const [noCourse, setNoCourse] = useState(false);
     const [error500Status, setError500Status] = useState(false)

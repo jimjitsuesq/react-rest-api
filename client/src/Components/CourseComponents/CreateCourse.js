@@ -13,7 +13,6 @@ function CreateCourse (props) {
     const [password, setPassword] = useState('');
     const [validationErrors, setValidationErrors] = useState([]);
     const [error500Status, setError500Status] = useState(false);
-    const cookieValue = document.cookie.split('=')[1]
     let history = useHistory()
     const loggedInUser = localStorage.getItem('userInfo')
     const foundUser = JSON.parse(loggedInUser);
@@ -23,7 +22,7 @@ function CreateCourse (props) {
         setEmailAddress(foundUser.emailAddress);
         setPassword(foundUser.password)
     }, [])
-    
+
     const handleSubmit = async (e) => {
         const course = {
             title,
@@ -32,16 +31,9 @@ function CreateCourse (props) {
             materialsNeeded,
             userId
         }
-        console.log(course)
         e.preventDefault();
-        console.log(emailAddress)
-        console.log(password)
-        // console.log(props.userData.password)
-        // console.log(JSON.stringify(password))
-        // console.log(cookieValue)
-        // console.log(foundUser.password)
         try {
-            const response = await axios.post('http://localhost:5000/api/courses', course, {
+            await axios.post('http://localhost:5000/api/courses', course, {
                 auth: {
                     username: emailAddress,
                     password: password
@@ -109,7 +101,7 @@ function CreateCourse (props) {
                             </textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit" >Create Course</button><button className="button button-secondary"><a href="/">Cancel</a></button>
+                    <button className="button" type="submit" >Create Course</button><a className="button button-secondary" href="/">Cancel</a>
                 </form>
             </div>
     )
