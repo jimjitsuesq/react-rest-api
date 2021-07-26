@@ -3,14 +3,14 @@ import { useHistory, Link } from 'react-router-dom';
 
 function Header (props) {
     let history = useHistory()
-    if(props.isLoggedIn === true) {
+    if(props.props.isLoggedIn === true) {
         return(
             <header>
                 <div className="wrap header--flex">
                     <h1 className="header--logo"><a href="/">Courses</a></h1>
                     <nav>
                         <ul className="header--signedin">
-                            <li>Welcome, {props.userName}!</li>
+                            <li>Welcome, {props.props.userData.firstName}!</li>
                             <li><a href="/signout">Sign Out</a></li>
                         </ul>
                     </nav>
