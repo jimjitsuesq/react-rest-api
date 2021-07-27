@@ -35,19 +35,29 @@ function UpdateCourse (props) {
                 }   
             })
             history.push('/')
-        } catch(error) {
-            if(error.response.status === 500) {
+        } catch (error) {
+            if(error.response) {
+                if (error.response.status === 500) {
                 setError500Status(true)
-            } else {
-                if(error.response.status === 400) {
-                    setValidationErrors(error.response.data.errors) 
+                console.log(error500Status)
                 } else {
-                console.log(error);
+                    if(error.response.status === 400) {
+                        setValidationErrors(error.response.data.errors)
+                    }
+                    if(error.response.status === 404) {
+                        setNoCourse(true) 
+                    } else {
+                    console.log(error.response)
+                    }
                 }
+            }   else if (error.request) {
+                console.log(error.request)
+            }   else {
+                console.log(error);
             }
         }
     }
-    
+
     useEffect(() => {
         const fetchCourse = async () => {
             try {
@@ -60,14 +70,24 @@ function UpdateCourse (props) {
                 setMaterialsNeeded(response.data.course.materialsNeeded)
                 setLoading(false)
             } catch (error) {
-                if(error.response.status === 500) {
+                if(error.response) {
+                    if (error.response.status === 500) {
                     setError500Status(true)
-                } else {
-                    if(error.response.status === 404) {
-                        setNoCourse(true) 
+                    console.log(error500Status)
                     } else {
-                        console.log(error);
+                        if(error.response.status === 400) {
+                            setValidationErrors(error.response.data.errors)
+                        }
+                        if(error.response.status === 404) {
+                            setNoCourse(true) 
+                        } else {
+                        console.log(error.response)
+                        }
                     }
+                }   else if (error.request) {
+                    console.log(error.request)
+                }   else {
+                    console.log(error);
                 }
             }
         }

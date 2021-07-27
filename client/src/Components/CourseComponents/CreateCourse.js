@@ -34,7 +34,7 @@ function CreateCourse (props) {
             })
             console.log('Course Created')
             history.push('/')
-        } catch(error) {
+        }   catch(error) {
             if(error.response.status === 500) {
                 setError500Status(true)
             } else {
@@ -43,6 +43,23 @@ function CreateCourse (props) {
                 } else {
                 console.log(error);
                 }
+            }
+        }   catch (error) {
+            if(error.response) {
+                if (error.response.status === 500) {
+                setError500Status(true)
+                console.log(error500Status)
+                }   else { 
+                    if(error.response.status === 400) {
+                    setValidationErrors(error.response.data.errors)
+                    }
+                }   else {
+                    console.log(error.response)
+                }
+            }   else if (error.request) {
+                console.log(error.request)
+            }   else {
+                console.log(error);
             }
         }
     };

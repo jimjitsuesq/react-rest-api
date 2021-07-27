@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import Course from './Course';
 
-const Courses = () => {
+function Courses () {
     const [courses, setCourses] = useState([]);
     const [error500Status, setError500Status] = useState(false)
     async function fetchCourses () {
@@ -14,10 +14,17 @@ const Courses = () => {
             let allCourses = courseData.map(course => <Course courseId={course.id} key={course.id} courseTitle={course.title} />)
             setCourses(allCourses)
         } catch (error) {
-            if(error.response.status === 500) {
+            if(error.response) {
+                if (error.response.status === 500) {
                 setError500Status(true)
-            } else {
-            console.log(error)
+                console.log(error500Status)
+                } else {
+                    console.log(error.response)
+                }
+            }   else if (error.request) {
+                console.log(error.request)
+            }   else {
+                console.log(error);
             }
         }
     }

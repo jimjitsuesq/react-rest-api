@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { useHistory, Redirect } from 'react-router-dom';
 
-const CourseDetail = (props) => {
+function CourseDetail (props) {
     const [isLoading, setLoading] = useState(true);
     const [course, getCourse] = useState();
     const [materials, getMaterials] = useState();
