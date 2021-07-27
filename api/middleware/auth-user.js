@@ -16,19 +16,19 @@ exports.authenticateUser = async (req, res, next) => {
   
   /**
    * Uses the basic-auth module to parse a user's credentials from the
-   * authorization header and assign them to the variable 'credentials'
+   * authorization header and assigns them to the variable 'credentials'
+   * If a cookie is present, it is used for authentication.  Otherwise,
+   * credentials are used.
    */
 
   const credentials = auth(req);
   const cookie = req.signedCookies.user
-  console.log(credentials)
+
   if (cookie) {
-    console.log('cookie!')
     const user = await User.findOne({ where: {emailAddress: credentials.name} });
     const authenticated = (req.signedCookies.user === user.password)
     if (authenticated) {  
       console.log(`Authentication successful for username ${user.emailAddress}`);
-      // Store the user on the Request object.
       req.currentUser = user;
     } else {
       message = `Authentication failure for username: ${user.emailAddress}`;
@@ -37,17 +37,11 @@ exports.authenticateUser = async (req, res, next) => {
     if (credentials) {
       console.log('credentials!')
       const user = await User.findOne({ where: {emailAddress: credentials.name} });
-      // console.log(user)
-      // console.log(credentials.name)
-      // console.log(credentials.pass)
-      // console.log(user.password)
-      // console.log(req.signedCookies.user === user.password)
       if (user) {
         const authenticated = bcrypt
           .compareSync(credentials.pass, user.password);
         if (authenticated) {
           console.log(`Authentication successful for username ${user.emailAddress}`);
-          // Store the user on the Request object.
           req.currentUser = user;
         } else {
           message = `Authentication failure for username: ${user.emailAddress}`;
@@ -59,7 +53,6 @@ exports.authenticateUser = async (req, res, next) => {
       message = 'Auth header not found';
     }
   }
-
   if (message) {
     console.warn(message);
     res.status(401).json({ message: 'Access Denied' });

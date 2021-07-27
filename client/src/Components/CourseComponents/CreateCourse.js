@@ -8,7 +8,7 @@ import ValidationErrors from '../ErrorComponents/ValidationErrors';
  * user data
  * @returns A form that allows a logged-in user to create a new course
  */
-const CreateCourse = (props) => {
+function CreateCourse (props) {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [estimatedTime, setEstimatedTime] = useState('')
