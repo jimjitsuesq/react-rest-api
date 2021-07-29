@@ -17,9 +17,11 @@ function CreateCourse (props) {
     const [validationErrors, setValidationErrors] = useState([]);
     const [error500Status, setError500Status] = useState(false);
     let history = useHistory()
-    if(userId === 0) {
+
+    if(userId !== props.userData.id) {
         setUserId(props.userData.id)
     }
+
 /** 
  * Handles the submission of data to create the new course.
  * 
@@ -32,6 +34,7 @@ function CreateCourse (props) {
             materialsNeeded,
             userId
         }
+        console.log(course)
         e.preventDefault();
         try {
             await axios.post('http://localhost:5000/api/courses', course, {

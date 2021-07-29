@@ -20,6 +20,7 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
   const authenticatedUser = await User.findOne({ 
     where: {emailAddress: req.currentUser.emailAddress},
     attributes: {exclude: ['createdAt', 'updatedAt']}});
+    console.log(authenticatedUser)
   res.status(200).cookie('user', authenticatedUser.password, { signed: true }).json({ authenticatedUser })
 }));
 
@@ -38,7 +39,7 @@ router.get('/signout', (req, res) => {
 router.post('/users', asyncHandler(async (req, res) => {
     try {
       await User.create(req.body);
-      return res.status(201).location('/').send();
+        return res.status(201).send();
     } catch (error) {
       if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
         const errors = error.errors.map(err => err.message);
